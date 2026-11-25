@@ -43,10 +43,11 @@ description: "学术汇报演示文稿的论证规划与内容规范指南，覆
 | --- | --- | --- |
 | `scripts/timing_budget.py` | 按场景与总时长计算章节时长配比、页数与方法/结果占比校验 | `python3 scripts/timing_budget.py --minutes 15 --scene defense` |
 | `scripts/plan_deck.py` | 按场景生成逐页大纲骨架（结论式标题/证据/讲稿占位） | `python3 scripts/plan_deck.py --scene conference --minutes 12 --title "题目" --out outline.md` |
-| `scripts/outline_check.py` | 大纲规范自检；退出码 1 表示存在 ERROR，`--json` 输出结构化结果；`--scene` 可放宽组会周报的必备页要求 | `python3 scripts/outline_check.py outline.md --scene defense` |
+| `scripts/outline_check.py` | 大纲规范自检：必备页、References、结论位置与收尾页、结论式标题、bullet/正文上限、证据与定量数字、讲稿备注、方法/结果占比；退出码 1 表示存在 ERROR，`--json` 输出结构化结果；`--scene` 可放宽组会周报要求 | `python3 scripts/outline_check.py outline.md --scene defense` |
 
 - 场景 slug：`defense`（学位/开题/毕业答辩）、`conference`（会议/期刊口头报告）、`lab-meeting`（课题组会/周报）、`poster`（学术海报转 PPT）。
 - 大纲填写模板：[assets/outline_template.md](assets/outline_template.md)，含元信息、主线页面占位、附录与自检清单。
+- 单测：`scripts/tests/` 下标准库 `unittest` 用例，覆盖四场景骨架、正向/负向规则与边界；在 `scripts/tests/` 目录执行 `python3 -m unittest discover`。
 
 ## Core Principles
 

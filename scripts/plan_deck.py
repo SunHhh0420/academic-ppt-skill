@@ -84,6 +84,10 @@ def build_outline(scene: str, title: str, minutes: int) -> str:
         lines.append(f"- {PLACEHOLDER_EVIDENCE}")
         lines.append(f"- {PLACEHOLDER_NOTE}")
         lines.append("")
+    if scene != "lab-meeting":
+        lines.append("## 参考文献 / References")
+        lines.append("- 按统一格式列出借用的图、数据、主张对应文献；页内标注图号与出处。")
+        lines.append("")
     lines.append("## 附录（按需）")
     lines.append("- 预置问答页、补充消融、额外数据集、详细推导；单独标注编号。")
     return "\n".join(lines) + "\n"
