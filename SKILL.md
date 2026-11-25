@@ -17,9 +17,9 @@ description: "学术汇报演示文稿的论证规划与内容规范指南，覆
 
 ### Plan（规划，动手排版前）
 
-1. **判定场景与模式**：确认汇报类型、总时长、页数上限、听众；区分结构化论证（学术默认）与视觉叙事模式。见 [references/scenarios.md](references/scenarios.md)。
+1. **判定场景与模式**：确认汇报类型、总时长、页数上限、听众；区分结构化论证（学术默认）与视觉叙事模式。见 [references/scenarios.md](references/scenarios.md)。先用 `scripts/timing_budget.py` 按场景与时长算出章节配比与页数预算。
 2. **提炼主张与证据**：写出一句话研究问题/核心主张，列出 2–3 条关键证据；选定一条叙事脊柱（SCR / 漏斗 / 结论先行）。见 [references/argument.md](references/argument.md)。
-3. **搭逐页大纲**：一页一个论证角色，标题写结论句；标注每页主张与所需证据；做主张—证据映射。
+3. **搭逐页大纲**：一页一个论证角色，标题写结论句；标注每页主张与所需证据；做主张—证据映射。可用 `scripts/plan_deck.py` 按场景生成可填写的大纲骨架，再在其上补充主张与证据；空白模板见 [assets/outline_template.md](assets/outline_template.md)。
 4. **结构测试**：通过幽灵稿测试（标题连读成完整论证）与衔接测试（每页是上一页的自然推论）；规划研究问题页、结论页与附录。见 [references/argument.md](references/argument.md) 与 [references/deck-architecture.md](references/deck-architecture.md)。
 5. **确认架构与预算**：核对完整页面架构、引用安排、页数预算与可砍页标记。见 [references/deck-architecture.md](references/deck-architecture.md)。
 
@@ -31,8 +31,22 @@ description: "学术汇报演示文稿的论证规划与内容规范指南，覆
 
 ### Check（交付前复核）
 
-9. **学术 QA**：按 [references/checklist.md](references/checklist.md) 分组过规划、论证、证据、引用、文本视觉与时间讲稿清单；不达标先修复再交付。
-10. **落地生成**：把确认后的大纲、规范与素材交给现有 PPT 工具生成文件；成稿后再次过 QA 清单复核。
+9. **大纲自检**：用 `scripts/outline_check.py` 对 Markdown 大纲做确定性校验（必备页、结论式标题、bullet 上限、正文长度、方法/结果页证据标注）；先修掉 ERROR 与 WARN 再进入排版。
+10. **学术 QA**：按 [references/checklist.md](references/checklist.md) 分组过规划、论证、证据、引用、文本视觉与时间讲稿清单；不达标先修复再交付。
+11. **落地生成**：把确认后的大纲、规范与素材交给现有 PPT 工具生成文件；成稿后再次过 QA 清单复核。
+
+## Scripts & Assets
+
+规划阶段可确定性自动化的环节由下列脚本承担；脚本只用 Python 标准库，`python3` 直接运行，不渲染幻灯片（渲染交环境内现有 PPT 工具）。
+
+| 脚本 | 作用 | 典型调用 |
+| --- | --- | --- |
+| `scripts/timing_budget.py` | 按场景与总时长计算章节时长配比、页数与方法/结果占比校验 | `python3 scripts/timing_budget.py --minutes 15 --scene defense` |
+| `scripts/plan_deck.py` | 按场景生成逐页大纲骨架（结论式标题/证据/讲稿占位） | `python3 scripts/plan_deck.py --scene conference --minutes 12 --title "题目" --out outline.md` |
+| `scripts/outline_check.py` | 大纲规范自检；退出码 1 表示存在 ERROR，`--json` 输出结构化结果；`--scene` 可放宽组会周报的必备页要求 | `python3 scripts/outline_check.py outline.md --scene defense` |
+
+- 场景 slug：`defense`（学位/开题/毕业答辩）、`conference`（会议/期刊口头报告）、`lab-meeting`（课题组会/周报）、`poster`（学术海报转 PPT）。
+- 大纲填写模板：[assets/outline_template.md](assets/outline_template.md)，含元信息、主线页面占位、附录与自检清单。
 
 ## Core Principles
 
